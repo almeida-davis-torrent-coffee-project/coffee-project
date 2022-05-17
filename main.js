@@ -22,39 +22,33 @@ function updateCoffees(e) {
     let selectedRoast = roastSelection.value;
     let filteredCoffees = [];
     coffees.forEach(function (coffee) {
-        if (coffee.roast === selectedRoast) {
-            filteredCoffees.push(coffee);
+        switch (selectedRoast) {
+            case ('light') :
+                if (coffee.roast === 'light') {
+                    filteredCoffees.push(coffee)
+                }
+                break
+            case ('medium'):
+                if (coffee.roast === 'medium') {
+                    filteredCoffees.push(coffee)
+                }
+                break
+            case ('dark'):
+                if (coffee.roast === 'dark') {
+                    filteredCoffees.push(coffee)
+                }
+                break
+            default:
+                filteredCoffees.push(coffee)
         }
     });
     section.innerHTML = renderCoffees(filteredCoffees);
 }
 
 //start here tomorrow. Coffee search function returning undefined inside the function.
-function filterByRoastAndName(input) {
-
-    let filteredCoffees = [];
-    let roasts = roastSelection.value;
-
-    for (let i = 0; i < coffees.length; i++) {
-        if (roasts === coffees[i].roast) {
-            filteredCoffees.push(coffees[i])
-        }
-    }
-
-    for (const coffee of filteredCoffees) {
-        if(!coffee.name.toLowerCase().includes(input)){
-            filteredCoffees.splice(filteredCoffees.indexOf(coffee), 1)
-            console.log(filteredCoffees)
-        }
-    }
-    return filteredCoffees;
-}
-
-function coffeeSearch(e) {
+function coffeeSearch(){
     let searchTerm = searchInput.value.toLowerCase();
-    section.innerHTML = renderCoffees(filterByRoastAndName(searchTerm));
-
-
+    section.innerHTML = renderCoffees(coffees.filter(coffee => (roastSelection.value === 'all' || coffee.roast === roastSelection.value) && coffee.name.toLowerCase().includes(searchTerm)));
 }
 
 // from http://www.ncausa.org/About-Coffee/Coffee-Roasts-Guide
@@ -81,6 +75,6 @@ let roastSelection = document.querySelector('#roast-selection');
 let searchInput = document.querySelector('#coffeeSearch')
 section.innerHTML = renderCoffees(coffees);
 
-submitButton.addEventListener('click', updateCoffees);
-searchInput.addEventListener("keyup", coffeeSearch);
-roastSelection.addEventListener("change", coffeeSearch);
+// submitButton.addEventListener('click', updateCoffees);
+searchInput.addEventListener("keyup", coffeeSearch)
+roastSelection.addEventListener("change", updateCoffees);
