@@ -1,9 +1,6 @@
-table {
-    border-collapse: collapse;
-    margin: 15px 0;
+body{
+    font-family: 'Courier Prime', monospace;;
 }
-
-td, th {
-    border: 1px solid black;
-    padding: 5px 10px;
+h1,h2,h3,h4,h5,h6{
+    font-family: 'Special Elite', cursive;
 }
