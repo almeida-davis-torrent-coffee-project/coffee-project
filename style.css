@@ -1,7 +1,10 @@
 body{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
+    box-sizing: border-box;
+    /*display: flex;*/
+    height: 100%;
+    width: 100%;
+    /*flex-wrap: wrap;*/
+    /*justify-content: space-around;*/
     background-image: url("img/coffeebox.jpeg");
     background-repeat: no-repeat;
     background-size: cover;
@@ -18,29 +21,40 @@ h1 {
     font-size:  300%;
     text-align: center;
     width: 100%;
-    margin-bottom: 2em;
-
 }
 
 #coffees {
     display:flex;
     flex-wrap: wrap;
     order: 1;
-    width: 50%;
+    width: 40%;
 
 
 }
 
 .inputs {
+    position: absolute;
+    transform: translate(750px,100px);
     text-align: center;
-    width: 50%;
+    background-color: rgba(139,69,19,60%);
+    width: 40%;
+    height: 13em;
     order: 2;
+    border: inset;
+    border-radius: 15px;
 }
 
 .coffee {
     /*text-align: center;*/
-    background-color: #744700;
     padding: 0 10px;
     margin: 10px;
+    border: inset;
+    border-radius: 15px;
+    background-color: rgba(139,69,19,60%);
+}
 
+input, select {
+    background-color: saddlebrown;
+    color: antiquewhite;
+    border: inset;
 }

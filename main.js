@@ -24,6 +24,9 @@ function renderCoffees(coffees) {
 //the user search input.  It removes content that does not include any of the user input.
 function coffeeSearch(){
     let searchTerm = searchInput.value.toLowerCase();
+    if (coffeeList === null){
+        section.innerHTML = renderCoffees(coffees.filter(coffee => (roastSelection.value === 'all' || coffee.roast === roastSelection.value) && coffee.name.toLowerCase().includes(searchTerm)));
+    }
     section.innerHTML = renderCoffees(coffeeList.filter(coffee => (roastSelection.value === 'all' || coffee.roast === roastSelection.value) && coffee.name.toLowerCase().includes(searchTerm)));
 }
 // This function is used to add user input for a suggested coffee and roast
@@ -75,6 +78,7 @@ if (coffeeList === null) {
 } else {
     section.innerHTML = renderCoffees(coffeeList);
 }
+
 
 
 //Event listeners for our search and buttons.
