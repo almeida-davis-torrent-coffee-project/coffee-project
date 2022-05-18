@@ -1,5 +1,6 @@
 "use strict"
 
+// This is the functions that builds our div's for all the coffees.
 function renderCoffee(coffee) {
     let html = '<div class="coffee">';
     html += '<h1>' + coffee.name + '</h1>';
@@ -9,6 +10,8 @@ function renderCoffee(coffee) {
     return html;
 }
 
+// THis functions takes the above function and loops through it to add
+// all of our coffees to one line of text to place within the section
 function renderCoffees(coffees) {
     let html = '';
     for (let i = coffees.length - 1; i >= 0; i--) {
@@ -17,47 +20,25 @@ function renderCoffees(coffees) {
     return html;
 }
 
-// function updateCoffees(e) {
-//     e.preventDefault(); // don't submit the form, we just want to update the data
-//     let selectedRoast = roastSelection.value;
-//     let filteredCoffees = [];
-//     coffees.forEach(function (coffee) {
-//         switch (selectedRoast) {
-//             case ('light') :
-//                 if (coffee.roast === 'light') {
-//                     filteredCoffees.push(coffee)
-//                 }
-//                 break
-//             case ('medium'):
-//                 if (coffee.roast === 'medium') {
-//                     filteredCoffees.push(coffee)
-//                 }
-//                 break
-//             case ('dark'):
-//                 if (coffee.roast === 'dark') {
-//                     filteredCoffees.push(coffee)
-//                 }
-//                 break
-//             default:
-//                 filteredCoffees.push(coffee)
-//         }
-//     });
-//     section.innerHTML = renderCoffees(filteredCoffees);
-// }
-
-//start here tomorrow. Coffee search function returning undefined inside the function.
+//This is the function that filters through our coffee array in order to match
+//the user search input.  It removes content that does not include any of the user input.
 function coffeeSearch(){
     let searchTerm = searchInput.value.toLowerCase();
-    section.innerHTML = renderCoffees(coffees.filter(coffee => (roastSelection.value === 'all' || coffee.roast === roastSelection.value) && coffee.name.toLowerCase().includes(searchTerm)));
+    section.innerHTML = renderCoffees(coffeeList.filter(coffee => (roastSelection.value === 'all' || coffee.roast === roastSelection.value) && coffee.name.toLowerCase().includes(searchTerm)));
 }
-
+// This function is used to add user input for a suggested coffee and roast
+// and stores it as another variable that can be stored and pushed to our array of coffees.
 function addCoffee(){
     const storeCoffee = {
         id : coffees.length + 1,
         name: document.querySelector('#suggestion-name').value,
         roast: document.querySelector('#suggestion-roast').value
     }
+    // Sends user input to be stored within the coffee list.
     coffees.push(storeCoffee);
+    //local storage accepts a string, so we used the following to convert the
+    // the user input objects as a string that can be stored locally.  The string is
+    //then parsed to store it withing the array of coffees.
     window.localStorage.setItem('userCoffee', JSON.stringify(coffees));
     coffeeSearch(JSON.parse(localStorage.getItem('userCoffee')));
 }
@@ -79,17 +60,24 @@ let coffees = [
     {id: 13, name: 'Italian', roast: 'dark'},
     {id: 14, name: 'French', roast: 'dark'},
 ];
+
+//Sets the parsed item as to the coffeeList in order to display the addition on the page.
 const coffeeList = JSON.parse(localStorage.getItem('userCoffee'))
+
+//These are our selectors for our buttons, menus and inputs.
 let section = document.querySelector('#coffees');
 let submitButton = document.querySelector('#button');
 let roastSelection = document.querySelector('#roast-selection');
 let searchInput = document.querySelector('#coffeeSearch')
+// This is our if/else that prevents the page from displaying empty content when the list is defined as null.
 if (coffeeList === null) {
     section.innerHTML = renderCoffees(coffees)
 } else {
     section.innerHTML = renderCoffees(coffeeList);
 }
 
+
+//Event listeners for our search and buttons.
 submitButton.addEventListener('click', addCoffee);
 searchInput.addEventListener("keyup", coffeeSearch)
 roastSelection.addEventListener("change", coffeeSearch);
