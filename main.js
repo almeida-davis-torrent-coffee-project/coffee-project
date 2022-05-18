@@ -17,38 +17,49 @@ function renderCoffees(coffees) {
     return html;
 }
 
-function updateCoffees(e) {
-    e.preventDefault(); // don't submit the form, we just want to update the data
-    let selectedRoast = roastSelection.value;
-    let filteredCoffees = [];
-    coffees.forEach(function (coffee) {
-        switch (selectedRoast) {
-            case ('light') :
-                if (coffee.roast === 'light') {
-                    filteredCoffees.push(coffee)
-                }
-                break
-            case ('medium'):
-                if (coffee.roast === 'medium') {
-                    filteredCoffees.push(coffee)
-                }
-                break
-            case ('dark'):
-                if (coffee.roast === 'dark') {
-                    filteredCoffees.push(coffee)
-                }
-                break
-            default:
-                filteredCoffees.push(coffee)
-        }
-    });
-    section.innerHTML = renderCoffees(filteredCoffees);
-}
+// function updateCoffees(e) {
+//     e.preventDefault(); // don't submit the form, we just want to update the data
+//     let selectedRoast = roastSelection.value;
+//     let filteredCoffees = [];
+//     coffees.forEach(function (coffee) {
+//         switch (selectedRoast) {
+//             case ('light') :
+//                 if (coffee.roast === 'light') {
+//                     filteredCoffees.push(coffee)
+//                 }
+//                 break
+//             case ('medium'):
+//                 if (coffee.roast === 'medium') {
+//                     filteredCoffees.push(coffee)
+//                 }
+//                 break
+//             case ('dark'):
+//                 if (coffee.roast === 'dark') {
+//                     filteredCoffees.push(coffee)
+//                 }
+//                 break
+//             default:
+//                 filteredCoffees.push(coffee)
+//         }
+//     });
+//     section.innerHTML = renderCoffees(filteredCoffees);
+// }
 
 //start here tomorrow. Coffee search function returning undefined inside the function.
 function coffeeSearch(){
     let searchTerm = searchInput.value.toLowerCase();
     section.innerHTML = renderCoffees(coffees.filter(coffee => (roastSelection.value === 'all' || coffee.roast === roastSelection.value) && coffee.name.toLowerCase().includes(searchTerm)));
+}
+
+function addCoffee(){
+    const storeCoffee = {
+        id : coffees.length + 1,
+        name: document.querySelector('#suggestion-name').value,
+        roast: document.querySelector('#suggestion-roast').value
+    }
+    coffees.push(storeCoffee);
+    window.localStorage.setItem('userCoffee', JSON.stringify(coffees));
+    coffeeSearch(JSON.parse(localStorage.getItem('userCoffee')));
 }
 
 // from http://www.ncausa.org/About-Coffee/Coffee-Roasts-Guide
@@ -68,13 +79,17 @@ let coffees = [
     {id: 13, name: 'Italian', roast: 'dark'},
     {id: 14, name: 'French', roast: 'dark'},
 ];
-
+const coffeeList = JSON.parse(localStorage.getItem('userCoffee'))
 let section = document.querySelector('#coffees');
-let submitButton = document.querySelector('#submit');
+let submitButton = document.querySelector('#button');
 let roastSelection = document.querySelector('#roast-selection');
 let searchInput = document.querySelector('#coffeeSearch')
-section.innerHTML = renderCoffees(coffees);
+if (coffeeList === null) {
+    section.innerHTML = renderCoffees(coffees)
+} else {
+    section.innerHTML = renderCoffees(coffeeList);
+}
 
-// submitButton.addEventListener('click', updateCoffees);
+submitButton.addEventListener('click', addCoffee);
 searchInput.addEventListener("keyup", coffeeSearch)
-roastSelection.addEventListener("change", updateCoffees);
+roastSelection.addEventListener("change", coffeeSearch);
