@@ -1,6 +1,46 @@
 body{
-    font-family: 'Courier Prime', monospace;;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    background-image: url("img/coffeebox.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: 'Courier Prime', monospace;
+    color: antiquewhite;
+    padding: 10px;
 }
+
 h1,h2,h3,h4,h5,h6{
     font-family: 'Special Elite', cursive;
+}
+
+h1 {
+    font-size:  300%;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 2em;
+
+}
+
+#coffees {
+    display:flex;
+    flex-wrap: wrap;
+    order: 1;
+    width: 50%;
+
+
+}
+
+.inputs {
+    text-align: center;
+    width: 50%;
+    order: 2;
+}
+
+.coffee {
+    /*text-align: center;*/
+    background-color: #744700;
+    padding: 0 10px;
+    margin: 10px;
+
 }

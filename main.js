@@ -3,7 +3,7 @@
 // This is the functions that builds our div's for all the coffees.
 function renderCoffee(coffee) {
     let html = '<div class="coffee">';
-    html += '<h1>' + coffee.name + '</h1>';
+    html += '<h3>' + coffee.name + '</h3>';
     html += '<p>' + coffee.roast + '</p>';
     html += '</div>';
 
